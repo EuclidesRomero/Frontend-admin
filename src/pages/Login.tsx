@@ -22,7 +22,6 @@ const Login = () => {
 
   try {
     const {data} = await clienteAxios.post('/propietario/login', {correo, contraseña})
-    console.log(data)
     localStorage.setItem('token', data.token)
     navigate('/dashboard'); 
     window.location.reload();
@@ -45,6 +44,8 @@ const Login = () => {
     <ToastContainer />
     </div>
     <div className="xl:flex xl:justify-center xl:flex-col xl:items-center xl:-mt-10">
+      <p>euclidesantonioromeroibarra@gmail.com</p>
+      <p>junior1042</p>
       <div className="xl:flex xl:justify-center xl:flex-row mb-2 flex justify-between xl:w-[900px]">
         <div className="">
           <h1 className="text-2xl mt-10 mb-5">

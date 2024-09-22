@@ -9,16 +9,30 @@ interface AuthProviderPros {
 
 interface AuthProps {
   uuid_propietario: string | null;
+  id_propietario: string;
+  nombre_propietario: string;
+  primer_apellido_propietario: string;
+  correo:string,
+  
 }
+
+const initialAuthState: AuthProps = {
+  uuid_propietario: null,
+  id_propietario:"",
+  nombre_propietario: "", 
+  primer_apellido_propietario: "", 
+  correo: "",
+};
 
 interface AuthContextProps {
   auth: AuthProps;
   loading: boolean;
+  LogOut: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
-  const [auth, setAuth] = useState<AuthProps>({ uuid_propietario: null });
+  const [auth, setAuth] = useState<AuthProps>(initialAuthState);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
@@ -31,6 +45,7 @@ const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
         console.log('No hay token')
         return;
       }
+      console.log(token)
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -41,10 +56,15 @@ const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
         const { data } = await clienteAxios('propietario/obtener-propietario', config)
         console.log('data desde authProvider.tsx', data)
         setAuth(data);
-        console.log("Redirigiendo a /dashboard");
         navigate('/dashboard')
       } catch (error) {
-        setAuth({ uuid_propietario: null });
+        setAuth({
+          uuid_propietario: null,
+          id_propietario: "",
+          nombre_propietario: "", 
+          primer_apellido_propietario: "",
+          correo: ""
+        });
       }
       setLoading(false)
     }
@@ -52,11 +72,19 @@ const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
 
   }, [])
 
+
+  const LogOut = () => {
+    localStorage.removeItem('token')
+    window.location.href = '/login';
+  }
+
+
   return (
     <AuthContext.Provider
       value={{
         auth,
-        loading
+        loading,
+        LogOut
       }}>
       {children}
     </AuthContext.Provider>

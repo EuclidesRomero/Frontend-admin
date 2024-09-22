@@ -14,25 +14,35 @@ import Deudores from "./components/Deudores.tsx";
 import Perfil from "./components/Perfil.tsx";
 import WhatsappAdmin from "./components/WhatsappAdmin.tsx";
 import { SedMessage } from "./components/SedMessage.tsx";
+import Bussines from "./components/Bussines.tsx";
+import AddDeudor from "./components/AddDeudor.tsx";
+import { NegocioProvider } from "./context/NegociosProvider.tsx";
+import Confirmar from "./pages/confirmar.tsx";
 
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/" index element={<Home />} />
+        <NegocioProvider>
+          <Routes>
+            <Route path="/" index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<RutaProtegida />}>
-            <Route index element={<Dashboard />} />
-            <Route path="clientes" element={<Clientes />} />
-            <Route path="deudores" element={<Deudores />} />
-            <Route path="perfil" element={<Perfil />} />
-            <Route path="pedidos" element={<WhatsappAdmin />} />
-            <Route path="sms-to-deudores"element={<SedMessage />} />
-          </Route>
-        </Routes>
+            <Route path="/confirmar/:token" element= {<Confirmar/>} />
+            <Route path="/dashboard" element={<RutaProtegida />}>
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route path="clientes" element={<Clientes />} />
+                <Route path="deudores" element={<Deudores />} />
+                <Route path="add-deudor" element={<AddDeudor />} />
+                <Route path="perfil" element={<Perfil />} />
+                <Route path="pedidos" element={<WhatsappAdmin />} />
+                <Route path="sms-to-deudores" element={<SedMessage />} />
+                <Route path="negocios" element={<Bussines />} />
+              </Route>
+            </Route>
+          </Routes>
+        </NegocioProvider>
       </AuthProvider>
     </BrowserRouter>
   );

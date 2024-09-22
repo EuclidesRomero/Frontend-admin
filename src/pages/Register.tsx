@@ -8,20 +8,26 @@ import { ToastContainer, toast } from "react-toastify";
 const Register = () => {
   const [nombre, setNombre] = useState('')
   const [identificacion, setIdentificacion] = useState('')
-  const [apellido, setApellido] = useState('')
+  const [primerApellido, setPrimerApellido] = useState('')
   const [correo, setCorreo] = useState('')
   const [contraseña, setContraseña] = useState('')
   
 
   const register = async (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if ([nombre, identificacion, apellido, correo, contraseña].includes('')) {
+    if ([nombre, identificacion, primerApellido, correo, contraseña].includes('')) {
       toast.error('Todos los campos son obligatorios', {autoClose:3000, position:"top-center"})
     }
     else {
       try {
-        const {data}  = await clienteAxios.post('/propietario/create-propietario', {nombre, identificacion, apellido, correo, contraseña});
-        console.log(data) 
+        const {data}  = await clienteAxios.post('/propietario/create-propietario', {nombre, primerApellido, correo, contraseña, identificacion});
+        setNombre("")
+        setIdentificacion("")
+        setPrimerApellido("")
+        setCorreo("")
+        setContraseña("")
+        console.log(data)
+        toast(data.message, {autoClose: 3000})
       } catch (error) {
         console.log(error)
       }
@@ -30,97 +36,107 @@ const Register = () => {
   }
 
   return (
-    <>
+  <>
     <Header />
     <ToastContainer />
-    <div className="xl:flex justify-center  ">
-      <div className="xl:w-[900px] xl:h-[555px] xl:flex xl:items-center xl:border 2 border-gray-300 mt2">
-        <div className="xl:w-[450px] xl:h-[650px] xl:flex xl:flex-col">
-          <div className="xl:w-[450px] xl:h-10 mb-14">
-            <p className="xl:text-2xl xl:font-bold">Create Your Account</p>
-            <p className="text-gray-400 mt-5">
-              Welcome back! Please enter your details
-            </p>
-          </div>
-          <form className="xl:h-[550px] flex flex-col gap-2 items-center">
-            <label htmlFor="name" className="xl:w-4/6">Nombre</label>
+  <div className="flex justify-center min-h-screen items-start bg-gray-50">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden xl:w-[700px] xl:flex xl:h-auto">
+      <div className="xl:w-[350px] p-6">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Create Your Account</h2>
+          <p className="text-gray-500 mt-2 text-sm">Welcome! Please fill in your details below.</p>
+        </div>
+        <form className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre</label>
             <input
               id="name"
               type="text"
               value={nombre}
-              className="xl:w-64 xl:h-10 border-2 border-gray-300"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               onChange={e => setNombre(e.target.value)}
-              />
+            />
+          </div>
 
-            <label htmlFor="surname">Apellidos</label>
+          <div>
+            <label htmlFor="surname" className="block text-sm font-medium text-gray-700">Apellidos</label>
             <input
               id="surname"
               type="text"
-              value={apellido}
-              className="xl:w-64 xl:h-10 border-2 border-gray-300"
-              onChange={e => setApellido(e.target.value)}
-              />
+              value={primerApellido}
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onChange={e => setPrimerApellido(e.target.value)}
+            />
+          </div>
 
-            <label htmlFor="identification">Identificación</label>
+          <div>
+            <label htmlFor="identification" className="block text-sm font-medium text-gray-700">Identificación</label>
             <input
               id="identification"
               type="text"
               value={identificacion}
-              className="xl:w-64 xl:h-10 border-2 border-gray-300"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               onChange={e => setIdentificacion(e.target.value)}
             />
+          </div>
 
-            <label htmlFor="email">Correo</label>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo</label>
             <input
               id="email"
               type="email"
               value={correo}
-              className="xl:w-64 xl:h-10 border-2 border-gray-300"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               onChange={e => setCorreo(e.target.value)}
-              />
+            />
+          </div>
 
-            <label htmlFor="password">Contraseña</label>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
             <input
               id="password"
               type="password"
               value={contraseña}
-              className="xl:w-64 xl:h-10 border-2 border-gray-300"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               onChange={e => setContraseña(e.target.value)}
-              />
-
-            <label htmlFor="terms">
-              <input type="checkbox" id="terms" />
-              {' '} I accept all terms and conditions.
-            </label>
-
-            <div className="text-white xl:w-64 xl:h-7 xl:flex">
-              <input
-                type="submit"
-                value="Sign Up"
-                className="hover:cursor-pointer bg-black  xl:h-10 xl:w-64 w-44 h-8"
-                onClick={register}
-                />
-            </div>
-          <p className="pt-2">
-            Already have an account?{" "}
-            <span className="text-blue-black font-bold">
-              <Link to="/login">Log in</Link>
-            </span>
-          </p>
-          </form>
-
-        </div>
-
-        <div className=" hidden xl:block xl:w-[450px] xl:h-[550px]">
-          <img
-            src="/img/loginimag.jpg"
-            className=" hiden xl:h-[550px] w-[550px] object-cover"
-            alt="Registration Illustration"
             />
-        </div>
+          </div>
+
+          <div className="flex items-center">
+            <input type="checkbox" id="terms" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
+            <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
+              I accept all terms and conditions
+            </label>
+          </div>
+
+          <div className="mt-4">
+            <input
+              type="submit"
+              value="Sign Up"
+              className="w-full py-2 px-4 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer"
+              onClick={register}
+            />
+          </div>
+
+          <p className="text-center text-sm text-gray-500">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-600 font-semibold hover:underline">Log in</Link>
+          </p>
+        </form>
+      </div>
+
+      <div className="hidden xl:block xl:w-[350px]">
+        <img
+          src="/img/loginimag.jpg"
+          className="w-full h-full object-cover"
+          alt="Registration Illustration"
+        />
       </div>
     </div>
-    </>
+  </div>
+</>
+
+  
   );
 };
 

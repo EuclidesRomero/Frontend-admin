@@ -14,14 +14,14 @@ const Header = () => {
     <>
       <div className="flex ">
         <div className="ml-10 w-2/6">
-          <div className="size-20 ">
+          <div className="size-28 ">
             <Link to="/">
-              <img src="/img/admin.png" alt="Logo" />
+              <img src="/img/logop.png" alt="Logo" />
             </Link>
           </div>
         </div>
         <div className="hidden md:flex md:w-2/4  justify-end " style={{ fontFamily: "'Roboto Serif', serif" }}>
-          <nav className="flex flex-row justify-evenly mr-5 -mt-4">
+          <nav className="flex flex-row justify-evenly mr-5 -mt-2">
             <ul className="flex gap-10 mt-4">
               <li className="text-1xl font-semibold poppins-light"><Link to="/">Inicio</Link></li>
               <li className="text-1xl font-semibold poppins-light"><Link to="/about">About</Link></li>

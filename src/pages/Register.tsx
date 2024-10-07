@@ -12,7 +12,7 @@ const Register = () => {
   const [correo, setCorreo] = useState('')
   const [contraseña, setContraseña] = useState('')
   
-
+  console.log(import.meta.env.VITE_BACKEND_URL);  
   const register = async (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
     if ([nombre, identificacion, primerApellido, correo, contraseña].includes('')) {

@@ -226,12 +226,12 @@ const NegocioProvider: FC<NegociosProviderProps> = ({ children }) => {
     const getLinkDeuda = async (id_negocio: string, id_cliente: string) => {
         try {
             const { data } = await clienteAxios(`/bussines/getLink-user/${id_negocio}/${id_cliente}`, config)
+            console.log('enlace recibido desde el backend', data)
             return data;
         } catch (error: any) {
+            console.log(error.response.data.message)
             return { message: error.response.data.message || 'Error en la solicitud' };
         }
-
-
 
     }
 

@@ -100,13 +100,12 @@ const NegocioProvider: FC<NegociosProviderProps> = ({ children }) => {
             setChanges(true)
             return data;
         } catch (error) {
-            console.log('Error al crear negocio', error)
             return [];
         }
     }
 
     const deleteNegocio = async (id_negocio: string) => {
-        console.log('configuracion', config)
+
         try {
             const { data } = await clienteAxios.delete(`/bussines/delete-bussines/${id_negocio}`, config);
             setChanges(true)
@@ -124,7 +123,6 @@ const NegocioProvider: FC<NegociosProviderProps> = ({ children }) => {
     }
 
     const editNegocio = async (id_negocio: string, nombre: string, descripcion: string, direccion: string) => {
-        console.log(id_negocio)
         try {
             const { data } = await clienteAxios.put(`/bussines/uptade-bussines/${id_negocio}`, { nombre, descripcion, direccion }, config);
             setChanges(true)
@@ -188,7 +186,6 @@ const NegocioProvider: FC<NegociosProviderProps> = ({ children }) => {
             const { data } = await clienteAxios(`/bussines/history/${id_negocio}/${id_cliente}`, config);
             return data
         } catch (error: any) {
-            console.log(error)
             return { message: error.response.data.message || 'Error en la solicitud' };
         }
     }
@@ -203,21 +200,20 @@ const NegocioProvider: FC<NegociosProviderProps> = ({ children }) => {
             const { data } = await clienteAxios.post(`/bussines/crear-deuda/${id_cliente}`,
                 { id_negocio, monto: newMonto, fecha_monto: fecha.toISOString() }, config)
 
-            console.log(data)
             return data;
         } catch (error: any) {
-            console.log(error)
+        
             return { message: error.response.data.message || 'Error en la solicitud' };
         }
     }
 
     const deleteDeuda = async (id_negocio: string, id_cliente: string) => {
-        console.log(id_negocio, id_cliente, 'Desde el provider ')
+
         try {
             const { data } = await clienteAxios.delete(`/bussines/eliminar-deuda/${id_negocio}/${id_cliente}`, config)
             return data;
         } catch (error: any) {
-            console.log(error)
+
             return { message: error.response.data.message || 'Error en la solicitud' };
         }
 
@@ -226,10 +222,8 @@ const NegocioProvider: FC<NegociosProviderProps> = ({ children }) => {
     const getLinkDeuda = async (id_negocio: string, id_cliente: string) => {
         try {
             const { data } = await clienteAxios(`/bussines/getLink-user/${id_negocio}/${id_cliente}`, config)
-            console.log('enlace recibido desde el backend', data)
             return data;
         } catch (error: any) {
-            console.log(error.response.data.message)
             return { message: error.response.data.message || 'Error en la solicitud' };
         }
 

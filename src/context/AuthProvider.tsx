@@ -42,10 +42,8 @@ const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
       
       if (!token) {
         setLoading(false)
-        console.log('No hay token')
         return;
       }
-      console.log(token)
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +52,6 @@ const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
       }
       try {
         const { data } = await clienteAxios('propietario/obtener-propietario', config)
-        console.log('data desde authProvider.tsx', data)
         setAuth(data);
         navigate('/dashboard')
       } catch (error) {

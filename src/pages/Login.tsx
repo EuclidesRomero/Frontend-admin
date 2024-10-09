@@ -4,11 +4,13 @@ import clienteAxios from "../../config/clienteAxios";
 import Header from "../components/Header";
 import { ToastContainer, toast} from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loading from '../components/Loading'
 
 
 const Login = () => {
   const [correo, setCorreo] = useState(''); 
   const [contraseña, setContraseña]= useState('');
+  const [cargando, setCargando] = useState(false)
   const navigate = useNavigate(); 
 
   const ingresar = async (e: React.MouseEvent<HTMLInputElement>) => {
@@ -20,6 +22,7 @@ const Login = () => {
       })
     }
   try {
+    setCargando(true)
     const {data} = await clienteAxios.post('/propietario/login', {correo, contraseña})
     localStorage.setItem('token', data.token)
     navigate('/dashboard'); 
@@ -37,6 +40,7 @@ const Login = () => {
 
   return (
     <>
+    
     <Header />
     <div className="mx-auto my-0 w-[450px] h-20 -mt-12" >
     <ToastContainer />
@@ -45,6 +49,11 @@ const Login = () => {
       <div className="xl:flex xl:justify-center xl:flex-row mb-2 flex justify-between xl:w-[900px]">
         <div className="">
           <h1 className="text-2xl mt-10 mb-5">
+            <div className=" h-[60px] w-full flex justify-center items-center">
+              <div>
+              {cargando? <Loading type= 'spin' color='blue' />: ''}
+              </div>
+            </div>
             Inicia sesion y empieza a{" "}
             <span className="text-yellow-500 ">Administrar</span>
           </h1>

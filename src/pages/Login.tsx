@@ -25,7 +25,7 @@ const Login = () => {
     setCargando(true)
     const {data} = await clienteAxios.post('/propietario/login', {correo, contraseña})
     localStorage.setItem('token', data.token)
-    navigate('/dashboard'); 
+    navigate('/dashboard/perfil'); 
     window.location.reload();
     } catch (error) {
     if (error instanceof Error) {

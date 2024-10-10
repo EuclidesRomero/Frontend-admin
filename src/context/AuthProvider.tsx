@@ -53,7 +53,7 @@ const AuthProvider: FC<AuthProviderPros> = ({ children }) => {
       try {
         const { data } = await clienteAxios('propietario/obtener-propietario', config)
         setAuth(data);
-        navigate('/dashboard')
+        navigate('/dashboard/perfil')
       } catch (error) {
         setAuth({
           uuid_propietario: null,
